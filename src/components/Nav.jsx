@@ -33,6 +33,7 @@ const NavStyle = styled.nav`
   display: none;
   background-color: transparent;
   cursor: pointer;
+  pointer-events: auto;
   border: none;
 }
 
@@ -46,6 +47,8 @@ const NavStyle = styled.nav`
 
 .cart-trolley--link {
   position: relative;
+  cursor: pointer !important;
+  pointer-events: auto;
 
   .cart-trolley {
     position: relative;
@@ -80,7 +83,7 @@ const NavStyle = styled.nav`
 @media (max-width: ${({ theme }) => theme.media.mobile}) {
   .mobile-navbar-btn {
     display: inline-block;
-    z-index: 9999;
+    z-index: 10;
     border: ${({ theme }) => theme.colors.black};
 
     .mobile-nav-icon {
@@ -96,7 +99,7 @@ const NavStyle = styled.nav`
     top: 30%;
     right: 10%;
     color: ${({ theme }) => theme.colors.black};
-    z-index: 9999;
+    z-index: 9;
   }
 
   .active .close-outline {
@@ -127,7 +130,7 @@ const NavStyle = styled.nav`
     visibility: visible;
     opacity: 1;
     transform: translateX(0);
-    z-index: 999;
+    z-index: 9;
     transform-origin: right;
     transition: all 0.8s linear;
 
@@ -165,11 +168,12 @@ const Nav = () => {
         <NavStyle>
             <div className={menuIcon ? "navbar active" : "navbar"}>
                 <ul className="navbar-lists" style={{listStyleType:"none"}}>
-                    <li>
+                    <li >
                         <Link
                             to="/"
                             className="navbar-link "
-                            onClick={() => setMenuIcon(false)}>
+                            onClick={() => setMenuIcon(false)}
+                            >
                             Home
                         </Link>
                     </li>

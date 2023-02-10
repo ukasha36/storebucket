@@ -28,7 +28,7 @@ const AppProvider = ({ children }) => {
 
         }
     }
-    const singleProduct = async (url) => {
+    const getSingleProduct = async (url) => {
         dispatch({ type: 'SINGLE_LOADING_TYPE' })
         try {
             let res = await axios.get(url)
@@ -42,7 +42,7 @@ const AppProvider = ({ children }) => {
         getProduct(api)
     }, [])
     return (
-        <Context.Provider value={{ ...state, singleProduct }}>
+        <Context.Provider value={{ ...state, getSingleProduct }}>
             {children}
         </Context.Provider>
     )
