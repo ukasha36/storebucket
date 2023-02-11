@@ -25,7 +25,7 @@ const Sort = () => {
       </div>
       {/* 2nd column  */}
       <div className="product-data">
-        <p>{`${filterProduct.length !== 0 ? filterProduct.length : '0 Items Available'} Product Available`}</p>
+        <p>{`${filterProduct.length} Product Available`}</p>
       </div>
 
       {/* 3rd column  */}

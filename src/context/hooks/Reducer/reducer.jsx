@@ -47,8 +47,8 @@ export const filterProductReducer = (state, action) => {
 
             return {
                 ...state,
-                filterProduct: action.payload,
-                allProduct: action.payload
+                filterProduct: [...action.payload],
+                allProduct: [...action.payload]
             }
         case 'GRID_VIEW_TYPE':
             return {
@@ -59,6 +59,33 @@ export const filterProductReducer = (state, action) => {
             return {
                 ...state,
                 grid_View: false
+            }
+        case 'SORT_TYPE':
+            return {
+                ...state,
+                sort_value: action.payload
+            }
+        case 'SORT_VALUE_TYPE':
+            let newSortData = [];
+            let tempData = [...state.filterProduct]
+            const sortDataFunc = (a, b) => {
+                if (state.sort_value === 'a-z') {
+                    return a.name.localeCompare(b.name)
+                }
+                if (state.sort_value === 'z-a') {
+                    return b.name.localeCompare(a.name)
+                }
+                if (state.sort_value === 'lowest') {
+                    return a.price - b.price
+                }
+                if (state.sort_value === 'highest') {
+                    return b.price - a.price
+                }
+            }
+            newSortData = tempData.sort(sortDataFunc)
+            return {
+                ...state,
+                filterProduct: newSortData
             }
         default:
             return state

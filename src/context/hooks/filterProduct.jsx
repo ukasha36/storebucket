@@ -10,7 +10,7 @@ const Filter_Product = ({ children }) => {
         filterProduct: [],
         allProduct: [],
         grid_View: false,
-        sort_value: 'highest'
+        sort_value: ''
     }
     const [state, dispatch] = useReducer(filterProductReducer, initialState);
     const setGridView = () => {
@@ -19,9 +19,12 @@ const Filter_Product = ({ children }) => {
     const setListView = () => {
         dispatch({ type: 'List_VIEW_TYPE' })
     }
-    const sorting = () => {
-        dispatch({ type: 'SORT_TYPE' })
+    const sorting = (e) => {
+        dispatch({ type: 'SORT_TYPE', payload: e.target.value })
     }
+    useEffect(() => {
+        dispatch({ type: 'SORT_VALUE_TYPE' })
+    }, [state.sort_value]);
     useEffect(() => {
         dispatch({ type: 'FILTER_TYPE', payload: products })
     }, [products]);
