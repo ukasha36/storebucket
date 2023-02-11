@@ -1,4 +1,4 @@
-const reducer = (state, action) => {
+const Productreducer = (state, action) => {
     switch (action.type) {
         case "LOADING_TYPE":
             return {
@@ -40,4 +40,28 @@ const reducer = (state, action) => {
             return state
     }
 }
-export default reducer
+export default Productreducer
+export const filterProductReducer = (state, action) => {
+    switch (action.type) {
+        case 'FILTER_TYPE':
+
+            return {
+                ...state,
+                filterProduct: action.payload,
+                allProduct: action.payload
+            }
+        case 'GRID_VIEW_TYPE':
+            return {
+                ...state,
+                grid_View: true
+            }
+        case 'List_VIEW_TYPE':
+            return {
+                ...state,
+                grid_View: false
+            }
+        default:
+            return state
+    }
+
+}

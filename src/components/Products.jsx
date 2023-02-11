@@ -2,9 +2,12 @@ import styled from "styled-components";
 import ProductList from "./ProductList";
 import Sort from "./Sort";
 import FilterSections from "./FilterSections";
+import { useFilterContext } from "../context/hooks/filterProduct";
 // import { useFilterContext } from "./context/filter_context";
 
 const Products = () => {
+  const { allProduct } = useFilterContext()
+  // console.log(allProduct)
   return (
     <Wrapper>
       <div className="container grid grid-filter-column">
@@ -14,7 +17,7 @@ const Products = () => {
 
         <section className="product-view--sort">
           <div className="sort-filter">
-            <Sort/>
+            <Sort />
           </div>
           <div className="main-product">
             <ProductList />
