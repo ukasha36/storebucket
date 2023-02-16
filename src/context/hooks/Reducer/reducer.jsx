@@ -43,12 +43,23 @@ const Productreducer = (state, action) => {
 export default Productreducer
 export const filterProductReducer = (state, action) => {
     switch (action.type) {
-        case 'FILTER_TYPE':
 
+        case 'FILTER_TYPE':
+            let priceValue = action.payload.map((curEle) => {
+                return curEle.price
+            }
+            )
+            // console.log(Math.max(...priceValue), "hello");
+            // console.log(Math.min(...priceValue), "hello1");
             return {
                 ...state,
                 filterProduct: [...action.payload],
-                allProduct: [...action.payload]
+                allProduct: [...action.payload],
+                search_filter: {
+                    ...state.search_filter,
+                    maxPrice: Math.max(...priceValue),
+                    minPrice: Math.min(...priceValue)
+                }
             }
         case 'GRID_VIEW_TYPE':
             return {
@@ -112,12 +123,40 @@ export const filterProductReducer = (state, action) => {
                     (curElem) => { return curElem.company.toLowerCase().includes(state.search_filter.company.toLowerCase()) }
                 );
             }
-            if (state.search_filter.category === 'ALL' || state.search_filter.company === 'ALL') {
+            if (state.search_filter.color !== 'all') {
+                tempSearchData = tempSearchData.filter((curEle) => {
+                    return curEle.colors.includes(state.search_filter.color)
+                })
+            }
+            if (state.search_filter.category === 'ALL' || state.search_filter.company === 'ALL' || state.search_filter.color === 'ALL') {
                 tempSearchData = state.allProduct
+            }
+            if (state.search_filter.price) {
+                tempSearchData = tempSearchData.filter((curELe) => {
+                    return curELe.price <= state.search_filter.price
+                })
             }
             return {
                 ...state,
                 filterProduct: tempSearchData
+            }
+        case 'CLEAR_FILTER':
+            const allData = state.allProduct;
+
+            return {
+                ...state,
+                filterProduct: allData,
+                search_filter: {
+                    text: '',
+                    category: 'all',
+                    company: 'all',
+                    color: 'all',
+                    price: 0,
+                    minPrice: 0,
+                    maxPrice: Math.max(...allData.map((curEle) => {
+                        return curEle.price
+                    })),
+                }
             }
         default:
             return state

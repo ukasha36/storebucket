@@ -14,7 +14,11 @@ const Filter_Product = ({ children }) => {
         search_filter: {
             text: '',
             category: 'all',
-            company: 'all'
+            company: 'all',
+            color: 'all',
+            price: 0,
+            minPrice: 0,
+            maxPrice: 0
         }
     }
     const [state, dispatch] = useReducer(filterProductReducer, initialState);
@@ -32,10 +36,13 @@ const Filter_Product = ({ children }) => {
         let value = e.target.value;
         dispatch({ type: 'SEARCH_TYPE', payload: { name, value } })
     }
+    const clearFilter = () => {
+        dispatch({ type: 'CLEAR_FILTER' })
+    }
     useEffect(() => {
         dispatch({ type: 'SEARCH_FILTER_VALUE' })
         // console.log(state.search_filter.company);
-    }, [state.search_filter.text, state.search_filter.category, state.search_filter.company]);
+    }, [state.search_filter]);
 
     useEffect(() => {
         dispatch({ type: 'SORT_VALUE_TYPE' })
@@ -44,7 +51,7 @@ const Filter_Product = ({ children }) => {
         dispatch({ type: 'FILTER_TYPE', payload: products })
     }, [products]);
     return (
-        <filter_Context.Provider value={{ ...state, setGridView, setListView, sorting, setSearchField }}>
+        <filter_Context.Provider value={{ ...state, setGridView, setListView, sorting, setSearchField, clearFilter }}>
             {children}
         </filter_Context.Provider>
     )

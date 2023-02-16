@@ -82,14 +82,14 @@ const SingleProduct = () => {
 
             <div className="product-data-info">
               <p>
-                Available:
-                <span> {stock > 0 ? <AddToCart product={singleProduct}/> : "Not Available"}</span>
-              </p>
-              <p>
                 ID : <span> {id} </span>
               </p>
               <p>
                 Brand :<span> {company} </span>
+              </p>
+              <p>
+                Available:
+                <span> {stock > 0 ? <AddToCart product={singleProduct}/> : "Not Available"}</span>
               </p>
             </div>
           </div>

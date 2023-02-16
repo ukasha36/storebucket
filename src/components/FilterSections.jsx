@@ -1,21 +1,29 @@
 import React from 'react'
 import styled from 'styled-components';
 import { useFilterContext } from '../context/hooks/filterProduct';
+import { FaCheck } from "react-icons/fa";
+import ProductPrice from '../Helper/ProductPrice'
+import { Button } from '../styles/Buttons';
 
 const FilterSections = () => {
-  const { search_filter, setSearchField, allProduct } = useFilterContext();
-  const { category } = search_filter
-  // console.log("new" + allProduct)
+  const { search_filter: { text, category, color, price, maxPrice, minPrice }, setSearchField, allProduct, clearFilter } = useFilterContext();
+  // const { category, color, price } = search_filter
+
   const getUniqueData = (data, attr) => {
     let newVal = data.map((curEl) => {
       return curEl[attr]
     })
-    let uniqueVal = ['ALL', ...new Set(newVal)]
-    return uniqueVal
+    // console.log(['ALL', ...new Set(...[].concat(newVal))]);
+    if (attr === 'colors') {
+      newVal = newVal.flat();
+    }
+    return newVal = ['ALL', ...new Set(newVal)]
+
   }
   const categoryData = getUniqueData(allProduct, 'category')
   const companyData = getUniqueData(allProduct, 'company')
-  // console.log(companyData);
+  const colorData = getUniqueData(allProduct, 'colors')
+  // console.log(colorData);
   return (
     <Wrapper>
       <div className="filter-search">
@@ -24,7 +32,7 @@ const FilterSections = () => {
             type="text"
             name="text"
             placeholder="Search"
-            value={search_filter.text}
+            value={text}
             onChange={setSearchField}
           />
         </form>
@@ -66,7 +74,62 @@ const FilterSections = () => {
           </select>
         </form>
       </div>
-    </Wrapper>
+      <div className="filter-colors colors">
+        <h3>Colors</h3>
+
+        <div className="filter-color-style">
+          {
+            colorData.map((curEle, index) => {
+              if (curEle === "ALL") {
+                return (
+                  <button
+                    key={index}
+                    type="button"
+                    value={curEle}
+                    name="color"
+                    className="color-all--style"
+                    onClick={setSearchField}>
+                    all
+                  </button>
+                );
+              }
+              return (
+                <button
+                  className={color === curEle ? 'btnStyle active' : 'btnStyle'}
+                  value={curEle}
+                  key={index}
+                  type="button"
+                  name="color"
+                  style={{ backgroundColor: `${curEle}` }}
+                  onClick={setSearchField}
+                >
+                  {color === curEle ? <FaCheck /> : null}
+                </button>
+              )
+            })
+          }
+        </div>
+      </div>
+      <div className="filter_price">
+        <h3>Price</h3>
+        <p>
+          <ProductPrice price={price} />
+        </p>
+        <input
+          type="range"
+          name="price"
+          min={minPrice}
+          max={maxPrice}
+          value={price}
+          onChange={setSearchField}
+        />
+      </div>
+      <div className="filter-clear">
+        <Button className="btn"onClick={clearFilter}>
+          Clear Filters
+        </Button>
+      </div>
+    </Wrapper >
   )
 }
 const Wrapper = styled.section`
@@ -131,6 +194,7 @@ const Wrapper = styled.section`
     outline: none;
     opacity: 0.5;
     cursor: pointer;
+    // color:#fff;
     &:hover {
       opacity: 1;
     }

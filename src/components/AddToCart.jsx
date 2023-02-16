@@ -4,6 +4,7 @@ import { useState } from "react";
 import { FaCheck } from "react-icons/fa";
 import CartAmountToggle from './CartAmountToggle';
 import { NavLink } from 'react-router-dom';
+import { Button } from '../styles/Buttons';
 
 const AddToCart = ({ product }) => {
   const { id, colors, stock } = product;
@@ -18,20 +19,21 @@ const AddToCart = ({ product }) => {
   return (
     <Wrapper>
       <div className="colors">
-        <p>
+        <div>
           colors:
           {
-            colors.map((curEle) => {
+            colors.map((curEle,index) => {
               return (
                 <button className={color === curEle ? 'btnStyle active' : 'btnStyle'}
                   style={{ backgroundColor: curEle }}
                   onClick={() => setColor(curEle)}
+                  key={index}
                 >{color === curEle ? <FaCheck /> : null}
                 </button>
               )
             })
           }
-        </p>
+        </div>
       </div>
       <CartAmountToggle
         amount={amount}
@@ -39,9 +41,9 @@ const AddToCart = ({ product }) => {
         setIncrease={setIncrease}
       />
 
-      {/* <NavLink to="/cart">
+      <NavLink to="/cart">
         <Button className="btn">Add To Cart</Button>
-      </NavLink> */}
+      </NavLink>
     </Wrapper>
   )
 }
