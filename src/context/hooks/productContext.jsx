@@ -1,7 +1,9 @@
 import axios from "axios";
 import { useContext, useEffect, useReducer } from "react";
-import Context from "../Context";
 import reducer from "./Reducer/reducer";
+import { createContext } from "react";
+
+const Context = createContext();
 
 const AppProvider = ({ children }) => {
     const initialState = {

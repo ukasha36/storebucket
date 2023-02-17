@@ -163,3 +163,24 @@ export const filterProductReducer = (state, action) => {
     }
 
 }
+export const cartReducer = (state, action) => {
+    switch (action.type) {
+        case 'CART_TYPE':
+            const { id, product, color, price, amount, stock } = action.payload
+            console.log(product)
+            let cartProduct = {
+                id: id + color,
+                name: product.name,
+                image: product.image[0].url,
+                color: color,
+                price: price,
+                amount: amount
+            }
+            return {
+                ...state,
+                cartItem: [...state.cartItem, cartProduct]
+            }
+        default:
+            return state;
+    }
+}
