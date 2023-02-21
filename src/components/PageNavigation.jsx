@@ -5,7 +5,7 @@ import styled from "styled-components";
 const PageNavigation = ({ title }) => {
   return (
     <Wrapper>
-      <NavLink to="/">Home</NavLink>/{title}
+      <NavLink to="/products">Products</NavLink>/{title}
     </Wrapper>
   );
 };

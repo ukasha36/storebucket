@@ -4,6 +4,8 @@ import styled from "styled-components";
 import { FiShoppingCart } from "react-icons/fi";
 import { CgMenu, CgClose } from "react-icons/cg";
 import { useCartContext } from "../context/hooks/cartContext";
+import { Button } from "../styles/Buttons";
+import { useAuth0 } from "@auth0/auth0-react";
 
 const NavStyle = styled.nav`
 .navbar-lists {
@@ -162,7 +164,8 @@ const NavStyle = styled.nav`
 }`;
 const Nav = () => {
   const [menuIcon, setMenuIcon] = useState();
-  const { cartItem } = useCartContext()
+  const { loginWithRedirect, logout, isAuthenticated } = useAuth0();
+  const { cart } = useCartContext()
 
   return (
     <NavStyle>
@@ -201,10 +204,24 @@ const Nav = () => {
               Contact
             </Link>
           </li>
+          {!isAuthenticated ?
+
+            <li>
+              <Button className='btnStyle' onClick={() => loginWithRedirect()}>Log In
+              </Button>
+            </li>
+
+            : <li>
+              <Button onClick={() => logout({ logoutParams: { returnTo: window.location.origin } })}>
+                Log Out
+              </Button>
+            </li>
+
+          }
           <li>
             <Link to="/cart" className="navbar-link cart-trolley--link">
               <FiShoppingCart className="cart-trolley" />
-              <span className="cart-total--item"> {cartItem.length} </span>
+              <span className="cart-total--item"> {cart.length} </span>
             </Link>
           </li>
         </ul>

@@ -9,7 +9,7 @@ const Filter_Product = ({ children }) => {
     const initialState = {
         filterProduct: [],
         allProduct: [],
-        grid_View: false,
+        grid_View: true,
         sort_value: '',
         search_filter: {
             text: '',

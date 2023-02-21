@@ -167,18 +167,100 @@ export const cartReducer = (state, action) => {
     switch (action.type) {
         case 'CART_TYPE':
             const { id, product, color, price, amount, stock } = action.payload
-            console.log(product)
-            let cartProduct = {
-                id: id + color,
-                name: product.name,
-                image: product.image[0].url,
-                color: color,
-                price: price,
-                amount: amount
+            let existingProduct = state.cart.find((curEle) => curEle.id === id + color)
+            if (existingProduct) {
+                let updatingProduct = state.cart.map((curELe) => {
+                    let newAmount = curELe.amount + amount
+                    if (curELe.id === id + color) {
+                        if (newAmount >= curELe.max) {
+                            newAmount = curELe.max;
+                        }
+                        return {
+                            ...curELe,
+                            amount: newAmount
+                        }
+                    } else {
+                        return curELe
+                    }
+
+                });
+                return {
+                    ...state,
+                    cart: updatingProduct
+                }
+            } else {
+                let cartProduct = {
+                    id: id + color,
+                    name: product.name,
+                    image: product.image[0].url,
+                    color: color,
+                    price: price,
+                    amount: amount,
+                    max: stock
+                }
+                return {
+                    ...state,
+                    cart: [...state.cart, cartProduct]
+                }
             }
+        case 'SET_DECREMENT':
+            let updatedProduct = state.cart.map((curEle) => {
+                if (curEle.id === action.payload) {
+                    let dec = curEle.amount > 1 ? curEle.amount - 1 : 1
+                    return {
+                        ...curEle,
+                        amount: dec
+                    }
+                } else {
+                    return curEle
+                }
+            })
             return {
                 ...state,
-                cartItem: [...state.cartItem, cartProduct]
+                cart: updatedProduct
+            }
+        case 'SET_INCREMENT':
+            let updatedProductVal = state.cart.map((curEle) => {
+                if (curEle.id === action.payload) {
+                    let inc = curEle.amount < curEle.max ? curEle.amount + 1 : curEle.max
+                    return {
+                        ...curEle,
+                        amount: inc
+                    }
+                } else {
+                    return curEle
+                }
+            });
+            // console.log(updatedProductVal);
+            return {
+                ...state,
+                cart: updatedProductVal
+            }
+        case 'CART_TOTAL_ITEM':
+            const totalPrice = state.cart.reduce((preValue, curELe) => {
+                const { price, amount } = curELe
+                preValue = preValue + price * amount
+                return preValue
+            }, 0)
+            return {
+                ...state,
+                total_price: totalPrice
+
+            }
+        case 'REMOVE_ITEM':
+            const updateFilter = state.cart.filter((curELe) => {
+                // console.log(curELe.id + "id")
+                return curELe.id !== action.payload
+            })
+            // console.log(updateFilter);
+            return {
+                ...state,
+                cart: updateFilter
+            }
+        case 'CLEAR_CART':
+            return {
+                ...state,
+                cart: []
             }
         default:
             return state;
