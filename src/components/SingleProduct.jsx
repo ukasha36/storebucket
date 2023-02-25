@@ -30,6 +30,13 @@ const SingleProduct = () => {
   useEffect(() => {
     getSingleProduct(api)
   }, []);
+  useEffect(() => {
+    if (name === undefined) {
+      document.title = `Products`
+    } else {
+      document.title = `${name}`
+    }
+  }, [name])
   if (isSingleLoading) {
     return <div className="page_loading">Loading.....</div>;
   }
@@ -89,7 +96,7 @@ const SingleProduct = () => {
               </p>
               <p>
                 Available:
-                <span> {stock > 0 ? <AddToCart product={singleProduct}/> : "Not Available"}</span>
+                <span> {stock > 0 ? <AddToCart product={singleProduct} /> : "Not Available"}</span>
               </p>
             </div>
           </div>

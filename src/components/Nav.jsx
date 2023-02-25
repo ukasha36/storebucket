@@ -164,7 +164,7 @@ const NavStyle = styled.nav`
 }`;
 const Nav = () => {
   const [menuIcon, setMenuIcon] = useState();
-  const { loginWithRedirect, logout, isAuthenticated } = useAuth0();
+  const { loginWithRedirect, logout, isAuthenticated, user } = useAuth0();
   const { cart } = useCartContext()
 
   return (
@@ -204,6 +204,7 @@ const Nav = () => {
               Contact
             </Link>
           </li>
+          {isAuthenticated && <p>{user.name}</p>}
           {!isAuthenticated ?
 
             <li>
@@ -221,7 +222,7 @@ const Nav = () => {
           <li>
             <Link to="/cart" className="navbar-link cart-trolley--link">
               <FiShoppingCart className="cart-trolley" />
-              <span className="cart-total--item"> {cart.length} </span>
+              <span className="cart-total--item"> {Array.isArray(cart) ? cart.length : 0} </span>
             </Link>
           </li>
         </ul>

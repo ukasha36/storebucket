@@ -2,12 +2,17 @@ import styled from "styled-components";
 import ProductList from "./ProductList";
 import Sort from "./Sort";
 import FilterSections from "./FilterSections";
-import { useFilterContext } from "../context/hooks/filterProduct";
+import { useEffect } from "react";
+
+// import { useFilterContext } from "../context/hooks/filterProduct";
 // import { useFilterContext } from "./context/filter_context";
 
 const Products = () => {
-  const { allProduct } = useFilterContext()
+  // const { allProduct } = useFilterContext()
   // console.log(allProduct)
+  useEffect(() => {
+    document.title = "Products"
+  }, [])
   return (
     <Wrapper>
       <div className="container grid grid-filter-column">

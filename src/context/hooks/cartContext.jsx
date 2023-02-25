@@ -13,7 +13,7 @@ const cartContext = ({ children }) => {
         }
     }
     const initialState = {
-        cart: getLocalfunct(),
+        cart: Array.isArray ? (getLocalfunct()) : [],
         total_price: 0,
         shipping_fee: 50000
     }

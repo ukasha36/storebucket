@@ -167,7 +167,7 @@ export const cartReducer = (state, action) => {
     switch (action.type) {
         case 'CART_TYPE':
             const { id, product, color, price, amount, stock } = action.payload
-            let existingProduct = state.cart.find((curEle) => curEle.id === id + color)
+            let existingProduct = Array.isArray(state.cart) ? state.cart.find((curEle) => curEle.id === id + color) : false
             if (existingProduct) {
                 let updatingProduct = state.cart.map((curELe) => {
                     let newAmount = curELe.amount + amount
@@ -200,7 +200,7 @@ export const cartReducer = (state, action) => {
                 }
                 return {
                     ...state,
-                    cart: [...state.cart, cartProduct]
+                    cart: Array.isArray(state.cart) ? [...state.cart, cartProduct] : [cartProduct]
                 }
             }
         case 'SET_DECREMENT':
@@ -237,11 +237,11 @@ export const cartReducer = (state, action) => {
                 cart: updatedProductVal
             }
         case 'CART_TOTAL_ITEM':
-            const totalPrice = state.cart.reduce((preValue, curELe) => {
+            const totalPrice = Array.isArray(state.cart) ? state.cart.reduce((preValue, curELe) => {
                 const { price, amount } = curELe
                 preValue = preValue + price * amount
                 return preValue
-            }, 0)
+            }, 0) : 0
             return {
                 ...state,
                 total_price: totalPrice
