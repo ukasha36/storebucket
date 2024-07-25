@@ -7,7 +7,7 @@ const About = () => {
     document.title = "About"
   }, [])
   const data = {
-    name: "Syed's store",
+    name: "Your store",
   };
   return (
     <>

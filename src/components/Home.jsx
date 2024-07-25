@@ -10,7 +10,7 @@ const Home = () => {
     document.title = "Home"
   }, [])
   const data = {
-    name: "Syed's store",
+    name: "Your Store",
   };
 
   return <>

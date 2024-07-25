@@ -1,4 +1,4 @@
-import { NavLink } from "react-router-dom";
+import { NavLink , Link} from "react-router-dom";
 import styled from "styled-components";
 import { Button } from "../styles/Buttons";
 
@@ -82,8 +82,14 @@ const HeroSection = ({ myData }) => {
                             atque temporibus veniam doloribus libero ad error omnis voluptates
                             animi! Suscipit sapiente.
                         </p>
-                        <NavLink>
-                            <Button>show now</Button>
+                        <NavLink >
+                         
+                            <Button >
+                            <a href='/products'>
+                              shop now
+                              </a>
+                              </Button>
+                           
                         </NavLink>
                     </div>
                     {/* our homepage image  */}
